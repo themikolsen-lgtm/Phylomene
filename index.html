@@ -4780,5 +4780,135 @@ document.addEventListener('click', function(e){
 }
 </style>
 
+
+<style id="meal-summary-dual-design-v1">
+/* Deux présentations visibles : panneau détaillé puis bandeau réduit */
+#mealView .my-fixed .my-sum{
+ display:grid !important;grid-template-columns:1.2fr repeat(3,minmax(0,1fr)) !important;
+ gap:0 !important;padding:12px 14px 10px !important;margin:0 0 10px !important;
+ min-height:114px !important;border:0 !important;border-radius:32px !important;
+ background:#fff !important;box-shadow:0 9px 24px -17px rgba(30,40,70,.25) !important;
+}
+#mealView .my-fixed .my-sum>.mc-k,
+#mealView .my-fixed .my-sum>.mc-p,
+#mealView .my-fixed .my-sum>.mc-duo .mc-mini{
+ display:flex !important;flex-direction:column !important;justify-content:flex-start !important;
+ align-items:stretch !important;position:relative !important;min-width:0 !important;
+ margin:0 !important;padding:4px 9px 0 !important;overflow:visible !important;background:transparent !important;
+}
+#mealView .my-fixed .my-sum>.mc-k{grid-column:1 !important;grid-row:1 !important;padding-left:22px !important;}
+#mealView .my-fixed .my-sum>.mc-p{grid-column:2 !important;grid-row:1 !important;border-left:1px solid #cbd2dc !important;}
+#mealView .my-fixed .my-sum>.mc-duo{display:contents !important;}
+#mealView .my-fixed .my-sum>.mc-duo .mc-f{grid-column:3 !important;grid-row:1 !important;border-left:1px solid #cbd2dc !important;}
+#mealView .my-fixed .my-sum>.mc-duo .mc-c{grid-column:4 !important;grid-row:1 !important;border-left:1px solid #cbd2dc !important;}
+#mealView .my-fixed .my-sum>.mc-k:before,
+#mealView .my-fixed .my-sum>.mc-p:before,
+#mealView .my-fixed .my-sum>.mc-duo .mc-mini:before{
+ display:block !important;font-size:17px !important;line-height:1.05 !important;font-weight:900 !important;
+ color:#382b36 !important;margin:0 0 6px !important;
+}
+#mealView .my-fixed .my-sum>.mc-k:before{content:"kcal";color:#79d94e !important;font-size:22px !important;}
+#mealView .my-fixed .my-sum>.mc-p:before{content:"Protéines";}
+#mealView .my-fixed .my-sum>.mc-f:before{content:"Lipides";}
+#mealView .my-fixed .my-sum>.mc-c:before{content:"Glucides";}
+#mealView .my-fixed .my-sum .mc-r{
+ display:flex !important;flex-direction:row !important;align-items:center !important;justify-content:flex-start !important;
+ gap:8px !important;order:2 !important;position:static !important;width:auto !important;height:auto !important;
+ margin:0 !important;padding:0 !important;border:0 !important;border-radius:0 !important;background:none !important;box-shadow:none !important;
+}
+#mealView .my-fixed .my-sum .mc-r:before,
+#mealView .my-fixed .my-sum .mm-r:before{display:none !important;}
+#mealView .my-fixed .my-sum .mc-r small,
+#mealView .my-fixed .my-sum .mm-r small{display:none !important;}
+#mealView .my-fixed .my-sum>.mc-k .mc-r b{font-size:29px !important;color:#79d94e !important;font-style:italic !important;font-weight:900 !important;line-height:1 !important;}
+#mealView .my-fixed .my-sum>.mc-p .mc-r b,
+#mealView .my-fixed .my-sum>.mc-duo .mm-r b{font-size:23px !important;font-style:italic !important;font-weight:900 !important;line-height:1 !important;color:#55d9df !important;}
+#mealView .my-fixed .my-sum>.mc-duo .mc-f .mm-r b{color:#ffad32 !important;}
+#mealView .my-fixed .my-sum>.mc-duo .mc-c .mm-r b{color:#f04452 !important;}
+#mealView .my-fixed .my-sum>.mc-k .mc-l,
+#mealView .my-fixed .my-sum>.mc-p .mc-l,
+#mealView .my-fixed .my-sum>.mc-duo .mm-l{
+ display:block !important;order:3 !important;margin:5px 0 0 !important;padding:0 !important;
+ font-size:15px !important;line-height:1.05 !important;font-weight:900 !important;font-style:italic !important;
+ white-space:nowrap !important;color:#382b36 !important;
+}
+#mealView .my-fixed .my-sum>.mc-k .mc-l{color:#79d94e !important;}
+#mealView .my-fixed .my-sum .sm-in{font-size:inherit !important;width:40px !important;color:inherit !important;}
+#mealView .my-fixed .my-sum .mc-bar{
+ order:1 !important;display:block !important;position:relative !important;width:100% !important;height:12px !important;
+ min-height:12px !important;margin:0 0 5px !important;border-radius:99px !important;overflow:hidden !important;background:#f3f4f6 !important;
+}
+#mealView .my-fixed .my-sum .mc-bar i{display:block !important;height:100% !important;border-radius:99px !important;}
+#mealView .my-fixed .my-sum>.mc-k .mc-bar{background:#e7f5e3 !important;}
+#mealView .my-fixed .my-sum>.mc-k .mc-bar i{background:#79d94e !important;}
+#mealView .my-fixed .my-sum>.mc-p .mc-bar i{background:#55d9df !important;}
+#mealView .my-fixed .my-sum>.mc-duo .mc-f .mc-bar i{background:#ffb94f !important;}
+#mealView .my-fixed .my-sum>.mc-duo .mc-c .mc-bar i{background:#ff555b !important;}
+#mealView .my-fixed .my-sum>.mc-duo .mm-h{display:contents !important;}
+#mealView .my-fixed .my-sum>.mc-duo .mm-h>span{display:none !important;}
+#mealView .my-fixed .my-sum>.mc-note,
+#mealView .my-fixed .my-sum>.my-plan{display:none !important;}
+#mealView .my-fixed .my-sum.is-compact{min-height:114px !important;padding:12px 14px 10px !important;}
+#mealView .my-fixed .my-sum.is-compact>.mc-k,
+#mealView .my-fixed .my-sum.is-compact>.mc-p,
+#mealView .my-fixed .my-sum.is-compact>.mc-duo .mc-mini{height:auto !important;min-height:0 !important;max-height:none !important;opacity:1 !important;overflow:visible !important;}
+#mealView .my-fixed .my-sum-mini{
+ display:grid;grid-template-columns:repeat(4,minmax(0,1fr));align-items:center;gap:12px;
+ height:46px;margin:0 7% 0;padding:0 28px;border-radius:28px;background:#fff;
+ box-shadow:0 9px 22px -16px rgba(30,40,70,.24);
+}
+#mealView .my-fixed .my-sum-mini .msm-cell{display:flex;align-items:center;gap:8px;min-width:0;}
+#mealView .my-fixed .my-sum-mini .msm-bar{height:10px;flex:1;min-width:18px;border-radius:99px;background:#f3f4f6;overflow:hidden;}
+#mealView .my-fixed .my-sum-mini .msm-bar i{display:block;height:100%;width:0;border-radius:99px;}
+#mealView .my-fixed .my-sum-mini .msm-val{font-size:19px;font-weight:900;font-style:italic;white-space:nowrap;color:#382b36;}
+#mealView .my-fixed .my-sum-mini .msm-k .msm-bar i{background:#79d94e;}
+#mealView .my-fixed .my-sum-mini .msm-p .msm-bar i{background:#55d9df;}
+#mealView .my-fixed .my-sum-mini .msm-f .msm-bar i{background:#ffb94f;}
+#mealView .my-fixed .my-sum-mini .msm-c .msm-bar i{background:#ff555b;}
+#mealView .my-fixed .my-sum-mini .msm-k .msm-val{color:#79d94e;}
+#mealView .my-fixed .my-sum-mini .msm-p .msm-val{color:#55d9df;}
+#mealView .my-fixed .my-sum-mini .msm-f .msm-val{color:#f49b19;}
+#mealView .my-fixed .my-sum-mini .msm-c .msm-val{color:#f04452;}
+@media(max-width:600px){
+ #mealView .my-fixed .my-sum{grid-template-columns:1.12fr repeat(3,minmax(0,1fr)) !important;padding:10px 7px 9px !important;border-radius:25px !important;}
+ #mealView .my-fixed .my-sum>.mc-k,#mealView .my-fixed .my-sum>.mc-p,#mealView .my-fixed .my-sum>.mc-duo .mc-mini{padding-left:5px !important;padding-right:4px !important;}
+ #mealView .my-fixed .my-sum>.mc-k{padding-left:9px !important;}
+ #mealView .my-fixed .my-sum>.mc-k:before{font-size:18px !important;}
+ #mealView .my-fixed .my-sum>.mc-k .mc-r b{font-size:22px !important;}
+ #mealView .my-fixed .my-sum>.mc-p:before,#mealView .my-fixed .my-sum>.mc-duo .mc-mini:before{font-size:12px !important;}
+ #mealView .my-fixed .my-sum>.mc-p .mc-r b,#mealView .my-fixed .my-sum>.mc-duo .mm-r b{font-size:17px !important;}
+ #mealView .my-fixed .my-sum .mc-l,#mealView .my-fixed .my-sum .mm-l{font-size:10px !important;}
+ #mealView .my-fixed .my-sum-mini{height:38px;margin:0 3%;padding:0 12px;gap:7px;}
+ #mealView .my-fixed .my-sum-mini .msm-cell{gap:4px;}
+ #mealView .my-fixed .my-sum-mini .msm-bar{height:7px;}
+ #mealView .my-fixed .my-sum-mini .msm-val{font-size:14px;}
+}
+</style>
+<script id="meal-summary-dual-sync-v1">
+(()=>{
+ const init=()=>{
+  const fixed=document.querySelector('#mealView .my-fixed');
+  const sum=fixed&&fixed.querySelector('.my-sum');if(!fixed||!sum||fixed.querySelector('.my-sum-mini'))return;
+  const mini=document.createElement('div');mini.className='my-sum-mini';mini.setAttribute('aria-label','Progression nutritionnelle compacte');
+  mini.innerHTML='<div class="msm-cell msm-k"><div class="msm-bar"><i></i></div><span class="msm-val"></span></div><div class="msm-cell msm-p"><div class="msm-bar"><i></i></div><span class="msm-val"></span></div><div class="msm-cell msm-f"><div class="msm-bar"><i></i></div><span class="msm-val"></span></div><div class="msm-cell msm-c"><div class="msm-bar"><i></i></div><span class="msm-val"></span></div>';
+  sum.insertAdjacentElement('afterend',mini);
+  const pairs=[['.mc-k','#myRem','i'],['.mc-p','#myPrem','i'],['.mc-f','#myFrem','i'],['.mc-c','#myCrem','i']];
+  const sync=()=>{
+   pairs.forEach(([cell,valueSel])=>{
+    const source=sum.querySelector(cell),target=mini.querySelector('.'+({'.mc-k':'msm-k','.mc-p':'msm-p','.mc-f':'msm-f','.mc-c':'msm-c'}[cell]));
+    if(!source||!target)return;
+    const val=source.querySelector(valueSel),out=target.querySelector('.msm-val');
+    if(val&&out)out.textContent=val.textContent;
+    const bar=source.querySelector('.mc-bar i'),fill=target.querySelector('.msm-bar i');
+    if(bar&&fill)fill.style.width=bar.style.width||'0%';
+   });
+  };
+  sync();new MutationObserver(sync).observe(sum,{subtree:true,childList:true,characterData:true,attributes:true,attributeFilter:['style']});
+ };
+ if(document.readyState==='loading')document.addEventListener('DOMContentLoaded',init,{once:true});else init();
+ setTimeout(init,500);
+})();
+</script>
+
 </body>
 </html>
