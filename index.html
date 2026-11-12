@@ -4546,32 +4546,46 @@ document.addEventListener('click', function(e){
 })();
 </script>
 
-<script id="meal-summary-scroll-v2">
+<script id="meal-summary-scroll-v3">
 (()=>{
+ let bound=false;
  const init=()=>{
   const view=document.getElementById('mealView');
   const fixed=view&&view.querySelector('.my-fixed');
-  if(!view||!fixed||view.dataset.summaryDirectionInit)return;
-  view.dataset.summaryDirectionInit='1';
-  let last=view.scrollTop,frame=0;
-  const update=()=>{
-   frame=0;
-   const now=view.scrollTop,delta=now-last;
-   if(Math.abs(delta)>=5){
-    if(delta>0&&now>45) fixed.classList.add('show-compact');
-    else if(delta<0) fixed.classList.remove('show-compact');
+  if(!view||!fixed||bound)return;
+  bound=true;
+  let previous=view.scrollTop||0, direction=0, distance=0, raf=0;
+  const apply=()=>{
+   raf=0;
+   const current=view.scrollTop||0;
+   const delta=current-previous;
+   previous=current;
+   if(current<=12){fixed.classList.remove('show-compact');direction=0;distance=0;return;}
+   if(Math.abs(delta)<1)return;
+   const nextDirection=delta>0?1:-1;
+   if(nextDirection!==direction){direction=nextDirection;distance=0;}
+   distance+=Math.abs(delta);
+   if(distance>=12){
+    if(direction===1)fixed.classList.add('show-compact');
+    else fixed.classList.remove('show-compact');
+    distance=0;
    }
-   if(now<=8)fixed.classList.remove('show-compact');
-   last=now;
   };
-  view.addEventListener('scroll',()=>{
-   if(!frame)frame=requestAnimationFrame(update);
-  },{passive:true});
+  const onScroll=()=>{if(!raf)raf=requestAnimationFrame(apply);};
+  view.addEventListener('scroll',onScroll,{passive:true});
+  document.addEventListener('scroll',e=>{if(e.target===view)onScroll();},true);
+  view.addEventListener('touchstart',()=>{previous=view.scrollTop||0;},{passive:true});
   fixed.classList.remove('show-compact');
+  // Re-synchronise when the Meal screen is reopened.
+  const observer=new MutationObserver(()=>{
+   if(view.classList.contains('show')){previous=view.scrollTop||0;fixed.classList.remove('show-compact');}
+  });
+  observer.observe(view,{attributes:true,attributeFilter:['class']});
  };
  if(document.readyState==='loading')document.addEventListener('DOMContentLoaded',init,{once:true});
  else init();
- setTimeout(init,400);
+ setTimeout(init,250);
+ setTimeout(init,900);
 })();
 </script>
 
@@ -4952,5 +4966,17 @@ document.addEventListener('click', function(e){
 }
 </style>
 
+
+<style id="meal-summary-scroll-fix-v1">
+#mealView .my-fixed .my-sum,
+#mealView .my-fixed .my-sum-mini{
+ transition:opacity .26s ease,transform .3s cubic-bezier(.2,.75,.25,1),max-height .3s ease,margin .3s ease,padding .3s ease !important;
+}
+#mealView .my-fixed .my-sum{opacity:1!important;visibility:visible!important;transform:translateY(0)!important;max-height:240px!important;min-height:114px!important;}
+#mealView .my-fixed .my-sum-mini{opacity:0!important;visibility:hidden!important;pointer-events:none!important;transform:translateY(-7px)!important;max-height:0!important;height:0!important;min-height:0!important;padding-top:0!important;padding-bottom:0!important;margin-top:0!important;margin-bottom:0!important;overflow:hidden!important;}
+#mealView .my-fixed.show-compact .my-sum{opacity:0!important;visibility:hidden!important;pointer-events:none!important;transform:translateY(-7px)!important;max-height:0!important;height:0!important;min-height:0!important;padding-top:0!important;padding-bottom:0!important;margin-top:0!important;margin-bottom:0!important;overflow:hidden!important;}
+#mealView .my-fixed.show-compact .my-sum-mini{opacity:1!important;visibility:visible!important;pointer-events:auto!important;transform:translateY(0)!important;max-height:60px!important;height:46px!important;min-height:46px!important;padding-top:0!important;padding-bottom:0!important;margin-top:0!important;margin-bottom:0!important;overflow:visible!important;}
+@media(prefers-reduced-motion:reduce){#mealView .my-fixed .my-sum,#mealView .my-fixed .my-sum-mini{transition:none!important;}}
+</style>
 </body>
 </html>
