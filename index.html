@@ -2055,6 +2055,48 @@ body:has(#mealView.show) .nav-pill button.on{ background:#7DD957; color:#fff; bo
   #mealView .my-card .my-mh > .my-mt > b{ font-size:13px !important; }
 }
 </style>
+
+<style id="meal-summary-compact-v1">
+/* Progression repas : kcal prioritaires, macros compactes */
+#mealView .my-sum{
+  padding:12px 15px 13px !important; border-radius:20px !important;
+  margin:0 0 11px !important; box-shadow:0 10px 25px -16px rgba(30,40,70,.24) !important;
+  transition:padding .28s ease, border-radius .28s ease, max-height .32s ease, margin .28s ease;
+}
+#mealView .my-sum .mc-row.mc-k{margin:0 !important;}
+#mealView .my-sum .mc-k .mc-l{font-size:24px !important; line-height:1 !important; color:#20242C !important; font-style:normal !important; font-weight:900 !important; padding:0 !important;}
+#mealView .my-sum .mc-k .mc-l .sm-in{font-size:12px !important; width:38px !important;}
+#mealView .my-sum .mc-k .mc-r b{font-size:27px !important;}
+#mealView .my-sum .mc-k .mc-bar{height:5px !important; margin-top:6px !important;}
+#mealView .my-sum .mc-row.mc-p,
+#mealView .my-sum .mc-duo,
+#mealView .my-sum .mc-note,
+#mealView .my-sum .my-plan{
+  max-height:180px; opacity:1; overflow:hidden;
+  transition:max-height .28s ease, opacity .22s ease, margin .28s ease;
+}
+#mealView .my-sum .mc-row.mc-p{margin-top:9px !important;}
+#mealView .my-sum .mc-row.mc-p .mc-l{font-size:12px !important; font-style:normal !important; padding:0 !important; color:#737B87 !important;}
+#mealView .my-sum .mc-row.mc-p .mc-r b{font-size:16px !important;}
+#mealView .my-sum .mc-row.mc-p .mc-bar{height:4px !important; margin-top:4px !important;}
+#mealView .my-sum .mc-duo{gap:12px !important; margin-top:8px !important;}
+#mealView .my-sum .mc-mini .mm-h>span{font-size:10px !important;}
+#mealView .my-sum .mc-mini .mm-r b{font-size:15px !important;}
+#mealView .my-sum .mc-mini .mm-r small{font-size:7px !important;}
+#mealView .my-sum .mc-mini .mm-l{font-size:10px !important; margin-top:1px !important;}
+#mealView .my-sum .mc-mini .sm-in{font-size:10px !important; width:30px !important;}
+#mealView .my-sum .mc-mini .mc-bar{height:4px !important; margin-top:4px !important;}
+#mealView .my-sum .mc-note{font-size:9px !important; margin-top:6px !important;}
+#mealView .my-sum.is-compact{padding:8px 13px !important; border-radius:15px !important; margin-bottom:8px !important;}
+#mealView .my-sum.is-compact .mc-row.mc-p,
+#mealView .my-sum.is-compact .mc-duo,
+#mealView .my-sum.is-compact .mc-note,
+#mealView .my-sum.is-compact .my-plan{max-height:0 !important; opacity:0 !important; margin-top:0 !important; pointer-events:none;}
+#mealView .my-sum.is-compact .mc-k .mc-bar{max-height:0 !important; height:0 !important; margin:0 !important; opacity:0 !important;}
+#mealView .my-sum.is-compact .mc-k .mc-l{font-size:21px !important;}
+#mealView .my-sum.is-compact .mc-k .mc-r b{font-size:23px !important;}
+@media(prefers-reduced-motion:reduce){#mealView .my-sum,#mealView .my-sum *{transition:none !important;}}
+</style>
 </head>
 <body>
 
@@ -4478,6 +4520,28 @@ document.addEventListener('click', function(e){
     if(S.day!==today()){ S.d={}; S.day=today(); save(); build(); calc(); }
     autoView();
   });
+})();
+</script>
+
+<script id="meal-summary-scroll-v1">
+(()=>{
+  const init=()=>{
+    const view=document.getElementById('mealView');
+    const summary=view&&view.querySelector('.my-sum');
+    if(!view||!summary||view.dataset.summaryCompactInit) return;
+    view.dataset.summaryCompactInit='1';
+    let frame=0;
+    const update=()=>{
+      frame=0;
+      summary.classList.toggle('is-compact',view.scrollTop>36);
+    };
+    view.addEventListener('scroll',()=>{
+      if(!frame) frame=requestAnimationFrame(update);
+    },{passive:true});
+    update();
+  };
+  if(document.readyState==='loading') document.addEventListener('DOMContentLoaded',init,{once:true});
+  else init();
 })();
 </script>
 </body>
