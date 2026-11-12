@@ -4567,5 +4567,128 @@ document.addEventListener('click', function(e){
   else init();
 })();
 </script>
+
+<style id="meal-summary-reference-layout-v1">
+/* Carte progression inspirée de la maquette : calories à gauche, trois anneaux à droite */
+#mealView .my-fixed .my-sum{
+  display:grid !important; grid-template-columns:minmax(190px,1.08fr) repeat(3,minmax(105px,1fr)) !important;
+  align-items:stretch !important; gap:0 !important; padding:0 !important; min-height:184px !important;
+  overflow:hidden !important; border:0 !important; border-radius:34px !important;
+  background:#fff !important; box-shadow:0 10px 28px -16px rgba(20,24,40,.22) !important;
+}
+#mealView .my-fixed .my-sum>.mc-k{
+  grid-column:1 !important; grid-row:1 !important; position:relative !important; z-index:1;
+  display:flex !important; flex-direction:column !important; align-items:center !important; justify-content:flex-end !important;
+  min-width:0 !important; min-height:184px !important; margin:0 !important; padding:0 14px 16px !important;
+  background:#79d94e !important; border:0 !important; border-radius:34px 0 0 34px !important;
+  clip-path:polygon(0 0,100% 0,86% 100%,0 100%) !important;
+}
+#mealView .my-fixed .my-sum>.mc-k .mc-l{
+  order:2 !important; width:100% !important; text-align:center !important; white-space:nowrap !important;
+  font-size:18px !important; line-height:1.15 !important; font-style:italic !important; font-weight:900 !important;
+  color:#fff !important; padding:0 !important; margin-top:12px !important;
+}
+#mealView .my-fixed .my-sum>.mc-k .mc-l .sm-in{font-size:18px !important;width:42px !important;color:#fff !important;border-color:rgba(255,255,255,.65) !important;}
+#mealView .my-fixed .my-sum>.mc-k .mc-r{order:1 !important; position:relative !important; display:flex !important; flex-direction:column !important;
+  justify-content:center !important; align-items:center !important; width:120px !important;height:120px !important; flex:none !important;
+  border-radius:50% !important; background:conic-gradient(#fff calc(var(--ring-pct,0)*1%),rgba(255,255,255,.22) 0) !important;
+  box-shadow:inset 0 0 0 12px rgba(39,173,53,.32) !important;}
+#mealView .my-fixed .my-sum>.mc-k .mc-r:before{content:"";position:absolute;inset:11px;border-radius:50%;background:#79d94e;}
+#mealView .my-fixed .my-sum>.mc-k .mc-r small,#mealView .my-fixed .my-sum>.mc-k .mc-r b{position:relative;z-index:1;color:#fff !important;}
+#mealView .my-fixed .my-sum>.mc-k .mc-r small{font-size:11px !important;font-weight:700 !important;}
+#mealView .my-fixed .my-sum>.mc-k .mc-r b{font-size:21px !important;line-height:1 !important;}
+#mealView .my-fixed .my-sum>.mc-k .mc-bar{display:none !important;}
+#mealView .my-fixed .my-sum>.mc-p,
+#mealView .my-fixed .my-sum>.mc-duo .mc-mini{
+  position:relative !important; display:flex !important; flex-direction:column !important; align-items:center !important;
+  justify-content:flex-start !important; min-width:0 !important; margin:0 !important; padding:18px 5px 10px !important;
+  overflow:visible !important; background:#fff !important;
+}
+#mealView .my-fixed .my-sum>.mc-p{grid-column:2 !important;grid-row:1 !important;}
+#mealView .my-fixed .my-sum>.mc-duo{display:contents !important;}
+#mealView .my-fixed .my-sum>.mc-duo .mc-f{grid-column:3 !important;grid-row:1 !important;}
+#mealView .my-fixed .my-sum>.mc-duo .mc-c{grid-column:4 !important;grid-row:1 !important;}
+#mealView .my-fixed .my-sum>.mc-p .mc-l,
+#mealView .my-fixed .my-sum>.mc-duo .mm-l{
+  order:2 !important; display:block !important; width:100% !important; margin:9px 0 0 !important;
+  text-align:center !important; white-space:normal !important; color:#302936 !important;
+  font-size:17px !important; line-height:1.12 !important; font-style:italic !important; font-weight:900 !important;
+}
+#mealView .my-fixed .my-sum>.mc-p .mc-l{font-size:0 !important;}
+#mealView .my-fixed .my-sum>.mc-p .mc-l #myPt{font-size:17px !important;}
+#mealView .my-fixed .my-sum>.mc-p .mc-l .sm-in{font-size:17px !important;width:37px !important;color:#302936 !important;}
+#mealView .my-fixed .my-sum>.mc-p .mc-r,
+#mealView .my-fixed .my-sum>.mc-duo .mm-r{
+  order:1 !important; position:relative !important; display:flex !important; flex-direction:column !important;
+  align-items:center !important; justify-content:center !important; width:92px !important;height:92px !important;
+  flex:none !important; margin:0 auto !important; border-radius:50% !important;
+  background:conic-gradient(var(--ring-color,#55d7dc) calc(var(--ring-pct,0)*1%),#f4f5f7 0) !important;
+}
+#mealView .my-fixed .my-sum>.mc-p .mc-r:before,
+#mealView .my-fixed .my-sum>.mc-duo .mm-r:before{
+  content:"";position:absolute;inset:9px;border-radius:50%;background:#fff;
+}
+#mealView .my-fixed .my-sum>.mc-p .mc-r small,
+#mealView .my-fixed .my-sum>.mc-duo .mm-r small,
+#mealView .my-fixed .my-sum>.mc-p .mc-r b,
+#mealView .my-fixed .my-sum>.mc-duo .mm-r b{position:relative;z-index:1;display:block !important;text-align:center !important;}
+#mealView .my-fixed .my-sum>.mc-p .mc-r small,
+#mealView .my-fixed .my-sum>.mc-duo .mm-r small{font-size:10px !important;color:#b8c0ca !important;font-weight:600 !important;margin:1px 0 0 !important;}
+#mealView .my-fixed .my-sum>.mc-p .mc-r b,
+#mealView .my-fixed .my-sum>.mc-duo .mm-r b{font-size:20px !important;line-height:1 !important;color:#302936 !important;}
+#mealView .my-fixed .my-sum>.mc-duo .mm-h{display:contents !important;}
+#mealView .my-fixed .my-sum>.mc-duo .mm-h>span{display:none !important;}
+#mealView .my-fixed .my-sum>.mc-duo .mm-l{font-size:17px !important;}
+#mealView .my-fixed .my-sum>.mc-duo .mm-l .sm-in{font-size:17px !important;width:38px !important;color:#302936 !important;}
+#mealView .my-fixed .my-sum>.mc-p .mc-bar,
+#mealView .my-fixed .my-sum>.mc-duo .mc-bar{display:none !important;}
+#mealView .my-fixed .my-sum>.mc-note,
+#mealView .my-fixed .my-sum>.my-plan{grid-column:1/-1 !important;margin:0 !important;font-size:9px !important;}
+#mealView .my-fixed .my-sum.is-compact{padding:0 !important;border-radius:25px !important;}
+#mealView .my-fixed .my-sum.is-compact>.mc-p,
+#mealView .my-fixed .my-sum.is-compact>.mc-duo,
+#mealView .my-fixed .my-sum.is-compact>.mc-note,
+#mealView .my-fixed .my-sum.is-compact>.my-plan{max-height:none !important;height:auto !important;opacity:1 !important;overflow:visible !important;pointer-events:auto !important;}
+#mealView .my-fixed .my-sum.is-compact>.mc-k{min-height:150px !important;}
+#mealView .my-fixed .my-sum.is-compact>.mc-k .mc-r{width:92px !important;height:92px !important;}
+#mealView .my-fixed .my-sum.is-compact>.mc-k .mc-l{font-size:15px !important;}
+#mealView .my-fixed .my-sum .mc-p{--ring-color:#54d7dc;}
+#mealView .my-fixed .my-sum .mc-f{--ring-color:#ffb84d;}
+#mealView .my-fixed .my-sum .mc-c{--ring-color:#ff555b;}
+@media(max-width:600px){
+ #mealView .my-fixed .my-sum{grid-template-columns:minmax(112px,1.02fr) repeat(3,minmax(0,1fr)) !important;min-height:146px !important;border-radius:25px !important;}
+ #mealView .my-fixed .my-sum>.mc-k{min-height:146px !important;padding:0 7px 13px !important;border-radius:25px 0 0 25px !important;}
+ #mealView .my-fixed .my-sum>.mc-k .mc-r{width:82px !important;height:82px !important;}
+ #mealView .my-fixed .my-sum>.mc-k .mc-l{font-size:13px !important;}
+ #mealView .my-fixed .my-sum>.mc-k .mc-l .sm-in{font-size:13px !important;width:32px !important;}
+ #mealView .my-fixed .my-sum>.mc-p,#mealView .my-fixed .my-sum>.mc-duo .mc-mini{padding:15px 2px 8px !important;}
+ #mealView .my-fixed .my-sum>.mc-p .mc-r,#mealView .my-fixed .my-sum>.mc-duo .mm-r{width:62px !important;height:62px !important;}
+ #mealView .my-fixed .my-sum>.mc-p .mc-r:before,#mealView .my-fixed .my-sum>.mc-duo .mm-r:before{inset:7px;}
+ #mealView .my-fixed .my-sum>.mc-p .mc-r b,#mealView .my-fixed .my-sum>.mc-duo .mm-r b{font-size:15px !important;}
+ #mealView .my-fixed .my-sum>.mc-p .mc-r small,#mealView .my-fixed .my-sum>.mc-duo .mm-r small{font-size:8px !important;}
+ #mealView .my-fixed .my-sum>.mc-p .mc-l,#mealView .my-fixed .my-sum>.mc-duo .mm-l{font-size:12px !important;margin-top:7px !important;}
+ #mealView .my-fixed .my-sum>.mc-p .mc-l #myPt,#mealView .my-fixed .my-sum>.mc-p .mc-l .sm-in,#mealView .my-fixed .my-sum>.mc-duo .mm-l .sm-in{font-size:12px !important;}
+}
+@media(prefers-reduced-motion:reduce){#mealView .my-fixed .my-sum,#mealView .my-fixed .my-sum *{transition:none !important;}}
+</style>
+<script id="meal-summary-rings-v1">
+(()=>{
+ const sync=()=>{
+  const root=document.querySelector('#mealView .my-fixed .my-sum'); if(!root)return;
+  root.querySelectorAll('.mc-row.mc-k,.mc-row.mc-p,.mc-mini').forEach(card=>{
+   const bar=card.querySelector('.mc-bar i'); if(!bar)return;
+   const pct=Math.max(0,Math.min(100,parseFloat(bar.style.width)||0));
+   const ring=card.querySelector('.mc-r,.mm-r'); if(ring) ring.style.setProperty('--ring-pct',pct);
+  });
+ };
+ const init=()=>{
+  const root=document.querySelector('#mealView .my-fixed .my-sum');if(!root)return;
+  sync();new MutationObserver(sync).observe(root,{subtree:true,attributes:true,attributeFilter:['style']});
+ };
+ if(document.readyState==='loading')document.addEventListener('DOMContentLoaded',init,{once:true});else init();
+ setTimeout(init,700);
+})();
+</script>
+
 </body>
 </html>
