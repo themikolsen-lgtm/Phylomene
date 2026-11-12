@@ -5024,5 +5024,62 @@ document.addEventListener('click', function(e){
 })();
 </script>
 
+
+<!-- Bloc autonome : mise en avant du repas selon l'heure, sans modifier les blocs existants -->
+<style id="meal-auto-current-card-v2">
+#mealView .my-card.auto-current-meal{
+ border:2px solid var(--mc,#79D94E)!important;
+ box-shadow:0 8px 24px -14px var(--mc,#79D94E)!important;
+ animation:mealCurrentInV2 .42s ease both;
+}
+@keyframes mealCurrentInV2{from{opacity:.65;transform:translateY(9px)}to{opacity:1;transform:translateY(0)}}
+@media(prefers-reduced-motion:reduce){#mealView .my-card.auto-current-meal{animation:none!important}}
+</style>
+<script id="meal-auto-current-card-v2">
+(()=>{
+ const currentMeal=()=>{
+  const h=new Date().getHours();
+  if(h>=18)return 'Dîner';
+  if(h>=15)return 'Snack';
+  if(h>=11)return 'Déjeuner';
+  if(h>=7)return 'Petit-déjeuner';
+  return null;
+ };
+ const showCurrentMeal=()=>{
+  const view=document.getElementById('mealView');
+  const list=document.getElementById('mlMeals');
+  if(!view||!list||!view.classList.contains('show'))return;
+  const name=currentMeal();
+  if(!name)return;
+  const cards=Array.from(list.querySelectorAll('.my-card'));
+  const target=cards.find(card=>{
+   const title=card.querySelector('.my-mt');
+   return title&&title.textContent.trim().toLocaleLowerCase('fr').includes(name.toLocaleLowerCase('fr'));
+  });
+  if(!target)return;
+  cards.forEach(card=>card.classList.remove('auto-current-meal'));
+  target.classList.add('auto-current-meal');
+  if(list.firstElementChild!==target)list.insertBefore(target,list.firstElementChild);
+  view.scrollTo({top:0,behavior:'smooth'});
+ };
+ const init=()=>{
+  const view=document.getElementById('mealView');
+  if(!view||view.dataset.autoMealV2Init)return;
+  view.dataset.autoMealV2Init='1';
+  const observer=new MutationObserver(()=>{
+   if(view.classList.contains('show'))setTimeout(showCurrentMeal,180);
+  });
+  observer.observe(view,{attributes:true,attributeFilter:['class']});
+  view.addEventListener('click',event=>{
+   if(event.target.closest('.my-dn'))setTimeout(showCurrentMeal,220);
+  });
+  if(view.classList.contains('show'))setTimeout(showCurrentMeal,250);
+ };
+ if(document.readyState==='loading')document.addEventListener('DOMContentLoaded',init,{once:true});
+ else init();
+ setTimeout(init,500);
+})();
+</script>
+
 </body>
 </html>
